@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <table class="table table-bordered">
+    <table class="table table-bordered" name="search_table">
         <thead>
           <tr>
             <th class="text-center" colspan="4">
@@ -42,5 +42,57 @@
           </tr>
         </tbody>
       </table>
+      <div class="d-flex justify-content-center">
+          <a href="#">Add new record</a>
+      </div>
+      <table class="table table-bordered" name="contacts_table">
+            <thead>
+              <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Country</th>
+                <th scope="col">City</th>
+                <th colspan="2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center">
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td class="text-center">
+                    <a href="#">[Edit]</a>    
+                </td>
+                <td class="text-center">
+                    <a href="#">[Delete]</a>
+                </td>
+              </tr>
+              <tr class="text-center">
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                <td class="text-center">
+                    <a href="#">[Edit]</a>    
+                </td>
+                <td class="text-center">
+                    <a href="#">[Delete]</a>
+                </td>
+              </tr>
+              <tr class="text-center">
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+                <td class="text-center">
+                        <a href="#">[Edit]</a>    
+                    </td>
+                    <td class="text-center">
+                        <a href="#">[Delete]</a>
+                    </td>
+              </tr>
+            </tbody>
+          </table>
 </div>
 @endsection
