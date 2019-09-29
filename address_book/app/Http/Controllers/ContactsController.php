@@ -11,6 +11,15 @@ class ContactsController extends Controller
     }
 
     public function store(){
-
+        $data = request()->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => ['required', 'email'],
+            'country' => 'required',
+            'city' => 'required',
+            'photo' => ['required', 'image'],
+            'description' => ''
+        ]);
+        dd(request()->all());
     }
 }
