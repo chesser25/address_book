@@ -10,8 +10,8 @@
                     <h1>Add New Record</h1>
                 </div>
                 <div class="container">
-                    <div class="row pt-2">
-                        <label for="first_name" class="col-sm">First Name:</label>
+                    <div class="row pt-2 d-flex align-items-baseline">
+                        <label for="first_name" class="col-sm-2">First Name:</label>
                         <input id="first_name" 
                             type="text" 
                             class="form-control col-sm-10
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="container">
-                    <div class="row pt-2">
+                    <div class="row pt-2 d-flex align-items-baseline">
                         <label for="last_name" class="col-sm">Last Name:</label>
                         <input id="last_name" 
                             type="text" 
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="container">
-                    <div class="row pt-2">
+                    <div class="row pt-2 d-flex align-items-baseline">
                         <label for="email" class="col-sm">Email:</label>
                         <input id="email" 
                             type="text" 
@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="container">
-                    <div class="row pt-2">
+                    <div class="row pt-2 d-flex align-items-baseline">
                         <label for="country" class="col-sm">Country:</label>
                         <select class="form-control col-sm-10" name="country" id="country">
                                 @foreach($countries as $country)
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="container">
-                    <div class="row pt-2">
+                    <div class="row pt-2 d-flex align-items-baseline">
                         <label for="city" class="col-sm">City:</label>
                         <select class="form-control col-sm-10" name="city" id="city">
                                 @foreach($cities as $city)
@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="container">
-                    <div class="row pt-2">
+                    <div class="row pt-2 d-flex align-items-baseline">
                         <label for="photo" class="col-sm">Photo:</label>
                         <input type="file" class="form-control-file col-sm-10" id="photo" name="photo"/>
                 
@@ -114,14 +114,14 @@
                 </div>
                                 
                 <div class="container">
-                    <div class="row pt-2">
+                    <div class="row pt-2 d-flex align-items-baseline">
                         <img id="photo-preview" class="form-control-file col-10 offset-2" src="/images/no-photo.jpg" alt="" width="300px" height="400px"/>
                     </div>
                 </div>
 
                 <div class="container">
-                    <div class="row pt-2 d-flex justify-content-center">
-                        <label for="description" class="text-center pt-4"><b>Notes:</b></label>
+                    <div class="row pt-4 d-flex justify-content-center">
+                        <label for="description"><b>Notes:</b></label>
                         <textarea rows="4" cols="50" id="description" 
                             type="text" 
                             class="form-control 
