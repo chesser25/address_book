@@ -58,8 +58,8 @@ class ContactsController extends Controller
         $contact->email = $data['email'];
         $contact->photo = $thumbnailImage->basename;
         $contact->description = $data['description'];
-        $contact->country_id = $country;
-        $contact->city_id = $city;
+        $contact->country_id = $country->id;
+        $contact->city_id = $city->id;
         $contact->save();
 
         // Show a list of all contacts
