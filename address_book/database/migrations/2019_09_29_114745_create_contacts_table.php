@@ -21,7 +21,7 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('city_id');
             $table->string('photo');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
 
             $table->index('country_id');
