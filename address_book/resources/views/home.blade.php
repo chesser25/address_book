@@ -56,43 +56,27 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="text-center">
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td class="text-center">
-                    <a href="#">[Edit]</a>    
-                </td>
-                <td class="text-center">
-                    <a href="#">[Delete]</a>
-                </td>
-              </tr>
-              <tr class="text-center">
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td class="text-center">
-                    <a href="#">[Edit]</a>    
-                </td>
-                <td class="text-center">
-                    <a href="#">[Delete]</a>
-                </td>
-              </tr>
-              <tr class="text-center">
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td class="text-center">
-                        <a href="#">[Edit]</a>    
-                    </td>
-                    <td class="text-center">
-                        <a href="#">[Delete]</a>
-                    </td>
-              </tr>
+              @foreach ($contacts as $contact)
+                <tr class="text-center">
+                <th scope="row">{{ $contact->id }}</th>
+                  <td>{{ $contact->first_name }}</td>
+                  <td>{{ $contact->country->name }}</td>
+                  <td>{{ $contact->city->name }}</td>
+                  <td class="text-center">
+                      <a href="#">[Edit]</a>    
+                  </td>
+                  <td class="text-center">
+                      <a href="#">[Delete]</a>
+                  </td>
+                </tr>
+              @endforeach
+              
             </tbody>
           </table>
+          <div class="row">
+              <div class="col-12">
+                  {{ $contacts->links() }}
+              </div>
+          </div>
 </div>
 @endsection
