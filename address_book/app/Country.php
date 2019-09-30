@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    public function user(){
+    public function contact(){
         return $this->hasMany(User::class);
     }
 }
