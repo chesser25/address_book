@@ -48,10 +48,10 @@
       <table class="table table-bordered" name="contacts_table">
             <thead>
               <tr class="text-center">
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Country</th>
-                <th scope="col">City</th>
+                <th scope="col">@sortablelink('id', '#')</th>
+                <th scope="col">@sortablelink('first_name', 'Name')</th>
+                <th scope="col">@sortablelink('country.name', 'Country')</th>
+                <th scope="col">@sortablelink('city.name', 'City')</th>
                 <th colspan="2">Action</th>
               </tr>
             </thead>

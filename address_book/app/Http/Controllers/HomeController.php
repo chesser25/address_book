@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $contactsPerPage = 1;
-        $contacts = Contact::paginate($contactsPerPage);
+        $contacts = Contact::sortable()->paginate($contactsPerPage);
         return view('home', compact('contacts'));
     }
 }
