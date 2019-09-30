@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
+    protected $guarded = [];
+    
     public function city(){
         return $this->belongsTo(City::class);
     }
