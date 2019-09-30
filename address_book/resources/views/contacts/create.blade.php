@@ -21,7 +21,7 @@
                             autocomplete="first_name" autofocus>
 
                             @error('first_name')
-                                <span class="invalid-feedback col-sm-6" role="alert">
+                                <span class="invalid-feedback col-8 offset-2" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
@@ -40,7 +40,7 @@
                             autocomplete="last_name" autofocus>
 
                             @error('last_name')
-                                <span class="invalid-feedback col-sm-6" role="alert">
+                                <span class="invalid-feedback col-8 offset-2" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
@@ -59,7 +59,7 @@
                             autocomplete="email" autofocus>
 
                             @error('email')
-                                <span class="invalid-feedback col-sm-6" role="alert">
+                                <span class="invalid-feedback col-8 offset-2" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
@@ -69,7 +69,7 @@
                 <div class="container">
                     <div class="row pt-2">
                         <label for="country" class="col-sm">Country:</label>
-                        <select class="form-control m-bot15" name="country" id="country">
+                        <select class="form-control col-sm-10" name="country" id="country">
                                 @foreach($countries as $country)
                                     <option value="{{ $country->name}}">
                                         {{$country->name}}</option>  
@@ -77,7 +77,7 @@
                         </select>
 
                         @error('country')
-                            <span class="invalid-feedback col-sm-6" role="alert">
+                            <span class="invalid-feedback col-8 offset-2" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -87,7 +87,7 @@
                 <div class="container">
                     <div class="row pt-2">
                         <label for="city" class="col-sm">City:</label>
-                        <select class="form-control m-bot15" name="city" id="city">
+                        <select class="form-control col-sm-10" name="city" id="city">
                                 @foreach($cities as $city)
                                     <option value="{{ $city->name}}">
                                         {{$city->name}}</option>  
@@ -95,7 +95,7 @@
                         </select>
 
                         @error('city')
-                            <span class="invalid-feedback col-sm-6" role="alert">
+                            <span class="invalid-feedback col-8 offset-2" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -104,20 +104,24 @@
 
                 <div class="container">
                     <div class="row pt-2">
-                        <label for="photo" class="col-md-2">Photo:</label>
-                        <input type="file" class="form-control-file" id="photo" name="photo"/>
+                        <label for="photo" class="col-sm">Photo:</label>
+                        <input type="file" class="form-control-file col-sm-10" id="photo" name="photo"/>
                 
                         @error('photo')
-                            <strong style="color:red;">{{ $message }}</strong>
+                            <strong class="col-8 offset-2" style="color:red;">{{ $message }}</strong>
                         @enderror
                     </div>
                 </div>
-                                    
-                <div class="pt-2">
-                    <img id="photo-preview" class="form-control-file" src="/images/no-photo.jpg" alt="" width="300px" height="400px"/>
+                                
+                <div class="container">
+                    <div class="row pt-2">
+                        <img id="photo-preview" class="form-control-file col-10 offset-2" src="/images/no-photo.jpg" alt="" width="300px" height="400px"/>
+                    </div>
                 </div>
-                <div class="form-group row justify-content-center pt-5">
-                        <label for="description" class="text-center"><b>Notes:</b></label>
+
+                <div class="container">
+                    <div class="row pt-2 d-flex justify-content-center">
+                        <label for="description" class="text-center pt-4"><b>Notes:</b></label>
                         <textarea rows="4" cols="50" id="description" 
                             type="text" 
                             class="form-control 
@@ -125,6 +129,7 @@
                             name="description" 
                             value="{{ old('description') }}"  
                             autocomplete="description" autofocus></textarea>
+                    </div>
                 </div>
 
                 <div class="row pt-4 d-flex justify-content-center">
