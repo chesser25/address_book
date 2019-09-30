@@ -70,7 +70,10 @@
                     <div class="row pt-2">
                         <label for="country" class="col-sm">Country:</label>
                         <select class="form-control m-bot15" name="country" id="country">
-                                <option value="Ukraine">Ukraine</option>  
+                                @foreach($countries as $country)
+                                    <option value="{{ $country->name}}">
+                                        {{$country->name}}</option>  
+                                @endforeach
                         </select>
 
                         @error('country')
@@ -85,7 +88,10 @@
                     <div class="row pt-2">
                         <label for="city" class="col-sm">City:</label>
                         <select class="form-control m-bot15" name="city" id="city">
-                                <option value="Ukraine">Ukraine</option>  
+                                @foreach($cities as $city)
+                                    <option value="{{ $city->name}}">
+                                        {{$city->name}}</option>  
+                                @endforeach  
                         </select>
 
                         @error('city')
@@ -108,9 +114,8 @@
                 </div>
                                     
                 <div class="pt-2">
-                    <img class="form-control-file" src="/images/no-photo.jpg" alt="" width="300px" height="400px"/>
+                    <img id="photo-preview" class="form-control-file" src="/images/no-photo.jpg" alt="" width="300px" height="400px"/>
                 </div>
-
                 <div class="form-group row justify-content-center pt-5">
                         <label for="description" class="text-center"><b>Notes:</b></label>
                         <textarea rows="4" cols="50" id="description" 
@@ -131,3 +136,4 @@
     </form>
 </div>
 @endsection
+
