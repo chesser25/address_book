@@ -28,6 +28,7 @@ class ContactsController extends Controller
     }
 
     public function store(){
+        // Validate data
         $data = request()->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -37,17 +38,26 @@ class ContactsController extends Controller
             'photo' => ['required', 'image'],
             'description' => ''
         ]);
+
+        // Get foreign keys objects 
         $country = \App\Country::where('name', $data['country'])->firstOrFail();
         $city = \App\City::where('name', $data['city'])->firstOrFail();
+        
+        // Save photo
+        $photoPath = request('photo')->store('uploads', 'public');
+
+        // Create new contact and save in db
         $contact = new \App\Contact();
         $contact->first_name = $data['first_name'];
         $contact->last_name = $data['last_name'];
         $contact->email = $data['email'];
-        $contact->photo = $data['photo'];
+        $contact->photo = $photoPath;
         $contact->description = $data['description'];
         $contact->country_id = $country;
         $contact->city_id = $city;
         $contact->save();
-        return view('/home');
+
+        // Show a list of all contacts
+        return redirect('/home');
     }
 }
