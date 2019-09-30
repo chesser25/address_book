@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use \App\Country;
 use \App\City;
 
+use Image;
+
 class ContactsController extends Controller
 {
     /**
@@ -44,14 +46,17 @@ class ContactsController extends Controller
         $city = \App\City::where('name', $data['city'])->firstOrFail();
         
         // Save photo
-        $photoPath = request('photo')->store('uploads', 'public');
+        //$photoPath = request('photo')->store('uploads', 'public');
+        $thumbnailImage = Image::make(request('photo'));
+        $thumbnailImage = $thumbnailImage->resize(300, 400);
+        $thumbnailImage = $thumbnailImage->save('uploads/'.time().request('photo')->getClientOriginalName());
 
         // Create new contact and save in db
         $contact = new \App\Contact();
         $contact->first_name = $data['first_name'];
         $contact->last_name = $data['last_name'];
         $contact->email = $data['email'];
-        $contact->photo = $photoPath;
+        $contact->photo = $thumbnailImage->basename;
         $contact->description = $data['description'];
         $contact->country_id = $country;
         $contact->city_id = $city;
