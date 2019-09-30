@@ -43,7 +43,7 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center">
-          <a href="#">Add new record</a>
+          <a href="/contact/create">Add new record</a>
       </div>
       <table class="table table-bordered" name="contacts_table">
             <thead>
