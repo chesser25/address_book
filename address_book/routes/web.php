@@ -22,3 +22,4 @@ Route::get('/contact/{person}/edit', 'ContactsController@edit')->name('contact.e
 Route::patch('/contact/{person}', 'ContactsController@update')->name('contact.update');
 Route::get('/contact/create', 'ContactsController@create')->name('contact.create');
 Route::post('/contact', 'ContactsController@store')->name('contact.store');
+Route::delete('/contact/{person}/destroy', 'ContactsController@destroy');

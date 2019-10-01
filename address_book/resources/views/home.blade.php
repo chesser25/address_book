@@ -66,7 +66,12 @@
                       <a href="/contact/{{$contact->id}}/edit">[Edit]</a>    
                   </td>
                   <td class="text-center">
-                      <a href="#">[Delete]</a>
+                      <!-- <a href="/contact/{{$contact->id}}/destroy" onclick="return confirm('Do you really want to delete the record?')">[Delete]</a> -->
+                      <form action="/contact/{{$contact->id}}/destroy" method="post">
+                          @csrf
+                          @method('DELETE')
+                          <button class="link" type="submit" onclick="return confirm('Do you really want to delete the record?');">[Delete]</button>
+                       </form>
                   </td>
                 </tr>
               @endforeach

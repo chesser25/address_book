@@ -113,4 +113,10 @@ class ContactsController extends Controller
         Contact::where('id', $person->id)->update($data);
         return redirect('/home');
     }
+
+    public function destroy(Contact $person){
+        unlink('uploads/' . $person->photo);
+        Contact::where('id', $person->id)->delete();
+        return redirect('/home');
+    }
 }
