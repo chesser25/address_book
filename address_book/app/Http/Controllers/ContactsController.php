@@ -84,27 +84,31 @@ class ContactsController extends Controller
             'email' => ['required', 'email'],
             'country' => 'required',
             'city' => 'required',
+            'photo' => '',
+            'description' => ''
         ]);
-
-        dd($data['photo']);
 
         // Get foreign keys objects 
         $country = Country::where('name', $data['country'])->firstOrFail();
         $city = City::where('name', $data['city'])->firstOrFail();
 
-        // Save photo
-        if($data['photo']){
-            $thumbnailImage = Image::make(request('photo'));
-            $thumbnailImage = $thumbnailImage->resize(300, 400);
-            $thumbnailImage = $thumbnailImage->save('uploads/'.time().request('photo')->getClientOriginalName());
-            $data['photo'] = $thumbnailImage->basename;
-        }
-
+        
         unset($data['country']);
         unset($data['city']);
 
         $data['country_id'] = $country->id;
         $data['city_id'] = $city->id;
+
+        // Save photo
+        if(isset($data['photo'])){
+            unlink('uploads/' . $person->photo);
+            $thumbnailImage = Image::make(request('photo'));
+            $thumbnailImage = $thumbnailImage->resize(300, 400);
+            $thumbnailImage = $thumbnailImage->save('uploads/'.time().request('photo')->getClientOriginalName());
+            $data['photo'] = $thumbnailImage->basename;
+        }else{
+            $data['photo'] = $person->photo;
+        }
 
         Contact::where('id', $person->id)->update($data);
         return redirect('/home');

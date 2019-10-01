@@ -128,8 +128,7 @@
                             class="form-control 
                             @error('description') is-invalid @enderror" 
                             name="description" 
-                            value="{{ old('description') ?? $person->description }}"  
-                            autocomplete="description" autofocus></textarea>
+                            autocomplete="description" autofocus>{{ old('description') ?? $person->description }}</textarea>
                     </div>
                 </div>
 
