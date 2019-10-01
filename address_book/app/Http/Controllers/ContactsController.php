@@ -14,7 +14,9 @@ class ContactsController extends Controller
     public function index(){
         $contactsPerPage = 1;
         $contacts = Contact::sortable()->paginate($contactsPerPage);
-        return view('contacts.index', compact('contacts'));
+        $countries = Country::all();
+        $cities = City::all();
+        return view('contacts.index', compact('contacts', 'countries', 'cities'));
     }
 
     public function show(Contact $person){
@@ -118,5 +120,12 @@ class ContactsController extends Controller
         unlink('uploads/' . $person->photo);
         Contact::where('id', $person->id)->delete();
         return redirect('/dashboard');
+    }
+
+    public function search(){
+        $keywords = request()['keywords'];
+        $contacts = Contact::where('first_name', 'LIKE', '%' . $keywords . '%')->get();
+        dd($contacts);
+        return redirect('index');
     }
 }
