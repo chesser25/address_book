@@ -63,7 +63,7 @@
                   <td>{{ $contact->country->name }}</td>
                   <td>{{ $contact->city->name }}</td>
                   <td class="text-center">
-                      <a href="#">[Edit]</a>    
+                      <a href="/contact/{{$contact->id}}/edit">[Edit]</a>    
                   </td>
                   <td class="text-center">
                       <a href="#">[Delete]</a>
