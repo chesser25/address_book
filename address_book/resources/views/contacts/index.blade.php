@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <form action="search" method="POST">
+          <form action="search" method="GET">
               @csrf
               <tr>
                 <td class="d-flex">

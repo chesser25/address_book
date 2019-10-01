@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'ContactsController@index');
-Route::post('/search', 'ContactsController@search');
+Route::get('/search', 'ContactsController@search');
 
 Auth::routes();
 

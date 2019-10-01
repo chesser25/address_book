@@ -123,9 +123,17 @@ class ContactsController extends Controller
     }
 
     public function search(){
+        $contactsPerPage = 1;
         $keywords = request()['keywords'];
-        $contacts = Contact::where('first_name', 'LIKE', '%' . $keywords . '%')->get();
-        dd($contacts);
-        return redirect('index');
+        $country = request()['country_id'];
+        $city = request()['city_id'];
+        $contacts = Contact::where('first_name', 'LIKE', '%' . $keywords . '%')
+            ->orWhere('city', '=', $city)
+            ->orWhere('counntry', '=', $country)
+            ->sortable()
+            ->paginate($contactsPerPage);
+        $countries = Country::all();
+        $cities = City::all();
+        return view('contacts.index', compact('contacts', 'countries', 'cities'));
     }
 }
