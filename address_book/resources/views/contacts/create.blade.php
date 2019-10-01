@@ -134,7 +134,7 @@
 
                 <div class="row pt-4 d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary mr-1">Save</button>
-                    <button class="btn btn-secondary">Return</button>
+                    <a class="btn btn-secondary" href='/home'>Return</a>
                 </div>
             </div>
         </div>
