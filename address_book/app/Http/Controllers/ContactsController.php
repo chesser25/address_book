@@ -17,6 +17,10 @@ class ContactsController extends Controller
         return view('contacts.index', compact('contacts'));
     }
 
+    public function show(Contact $person){
+        return view('contacts.show', compact('person'));
+    }
+
     public function create(){
         $countries = Country::all();
         $cities = City::all();
@@ -59,7 +63,7 @@ class ContactsController extends Controller
         $contact->save();
 
         // Show a list of all contacts
-        return redirect('/home');
+        return redirect('/dashboard');
     }
 
     public function edit(Contact $person){
@@ -107,12 +111,12 @@ class ContactsController extends Controller
         }
 
         Contact::where('id', $person->id)->update($data);
-        return redirect('/home');
+        return redirect('/dashboard');
     }
 
     public function destroy(Contact $person){
         unlink('uploads/' . $person->photo);
         Contact::where('id', $person->id)->delete();
-        return redirect('/home');
+        return redirect('/dashboard');
     }
 }

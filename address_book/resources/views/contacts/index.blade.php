@@ -67,7 +67,7 @@
                     @if (Auth::check())
                       {{ $contact->first_name }}
                     @else
-                      <a href="#">{{ $contact->first_name }}</a>
+                      <a href="/contact/{{$contact->id}}">{{ $contact->first_name }}</a>
                     @endif
                   </td>
                   <td>{{ $contact->country->name }}</td>
