@@ -11,14 +11,10 @@ use Image;
 
 class ContactsController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function index(){
+        $contactsPerPage = 1;
+        $contacts = Contact::sortable()->paginate($contactsPerPage);
+        return view('contacts.index', compact('contacts'));
     }
 
     public function create(){

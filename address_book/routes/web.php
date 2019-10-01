@@ -11,15 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ContactsController@index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/contact/{person}/edit', 'ContactsController@edit')->name('contact.edit');
-Route::patch('/contact/{person}', 'ContactsController@update')->name('contact.update');
-Route::get('/contact/create', 'ContactsController@create')->name('contact.create');
-Route::post('/contact', 'ContactsController@store')->name('contact.store');
-Route::delete('/contact/{person}/destroy', 'ContactsController@destroy');
+Route::get('/dashboard', 'ContactsController@index')->middleware('auth');
+Route::get('/contact/{person}/edit', 'ContactsController@edit')->middleware('auth');
+Route::patch('/contact/{person}', 'ContactsController@update')->middleware('auth');
+Route::get('/contact/create', 'ContactsController@create')->middleware('auth');
+Route::post('/contact', 'ContactsController@store')->middleware('auth');
+Route::delete('/contact/{person}/destroy', 'ContactsController@destroy')->middleware('auth');;
+
