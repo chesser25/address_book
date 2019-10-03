@@ -8,6 +8,7 @@ use App\Country;
 class Validator
 {
     private $dataToValidate;
+    
     function __construct(){
         $this->dataToValidate = [
             'first_name' => 'required',

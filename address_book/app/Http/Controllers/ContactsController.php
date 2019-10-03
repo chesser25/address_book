@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use \App\Library\Services\Repository;
 use \App\Library\Services\ImageManager;
 use \App\Library\Services\Validator;
+use App\Contact;
 
 class ContactsController extends Controller
 {
@@ -20,11 +21,9 @@ class ContactsController extends Controller
     }
 
     public function index(){
-        return view('contacts.index', [
+        return view('contacts.index', array_merge([
             'contacts' => $this->repository->getPaginatedContactsList(),
-            'countries' => $this->repository->getAllCountries(),
-            'cities' => $this->repository->getAllCities()
-        ]);
+        ], $this->getCitiesAndCountries()));
     }
 
     public function show(Contact $person){
@@ -32,10 +31,7 @@ class ContactsController extends Controller
     }
 
     public function create(){
-        return view('contacts/create',[
-            'countries' => $this->repository->getAllCountries(),
-            'cities' => $this->repository->getAllCities()
-        ]);
+        return view('contacts/create', $this->getCitiesAndCountries());
     }
 
     public function store(){
@@ -43,8 +39,6 @@ class ContactsController extends Controller
         $data = $this->validator->validateSave(request());
 
         $data['photo'] = $this->imageManager->save($data['photo']);
-        $data['country_id'] = $this->repository->getCountryByName($data['country_id'])->id;
-        $data['city_id'] = $this->repository->getCityByName($data['city_id'])->id;
         $this->repository->createContact($data);
 
         // Show a list of all contacts
@@ -52,25 +46,20 @@ class ContactsController extends Controller
     }
 
     public function edit(Contact $person){
-        return view('contacts.edit', [
-            'person' => $person,
-            'countries' => $this->repository->getAllCountries(),
-            'cities' => $this->repository->getAllCities()
-        ]);
+        return view('contacts.edit', array_merge([
+            'person' => $person
+        ], $this->getCitiesAndCountries()));
     }
 
     public function update(Contact $person){
         // Validate data
         $data = $this->validator->validateUpdate(request());
 
-        $data['country_id'] = $this->repository->getCountryByName($data['country_id'])->id;
-        $data['city_id'] = $this->repository->getCityByName($data['city_id'])->id;
-
         // Save photo
         if(isset($data['photo'])){
             $this->imageManager->delete($person->photo);
             $data['photo'] = $this->imageManager->save($data['photo']);
-        }else{
+        } else{
             $data['photo'] = $person->photo;
         }
 
@@ -89,10 +78,13 @@ class ContactsController extends Controller
         $country = request()['country_id'];
         $city = request()['city_id'];
 
-        return view('contacts.index', [
-            'contacts' => $contacts,
-            'countries' => $this->repository->getAllCountries(),
-            'cities' => $this->repository->findContact($keywords, $country, $city)
-        ]);
+        return view('contacts.index', array_merge([
+            'contacts' => $this->repository->findContact($keywords, $country, $city)   
+        ], $this->getCitiesAndCountries()));
+    }
+
+    private function getCitiesAndCountries(){
+        return ['countries' => $this->repository->getAllCountries(),
+                'cities' => $this->repository->getAllCountries()];
     }
 }

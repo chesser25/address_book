@@ -23,14 +23,6 @@ class Repository
         return Contact::sortable()->paginate(CONTACTS_PER_PAGE);
     }
 
-    public function getCountryByName($name){
-        return Country::where('name', $name)->firstOrFail();
-    }
-
-    public function getCityByName($name){
-        return City::where('name', $name)->firstOrFail();
-    }
-
     public function deleteContact(Contact $contact){
         Contact::where('id', $contact->id)->delete();
     }

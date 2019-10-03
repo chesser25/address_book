@@ -1,5 +1,6 @@
 <?php
 namespace App\Library\Services;
+
 use Illuminate\Support\Facades\Storage;
 use Image;
   
@@ -13,8 +14,7 @@ class ImageManager
 
     public function save($imageFile){
         $filename  = \Str::random(6) . '.' . $imageFile->getClientOriginalExtension();       
-        $photo = Image::make($imageFile)
-        ->resize(WIDTH, HEIGHT)->encode('jpg',80);
+        $photo = Image::make($imageFile)->resize(WIDTH, HEIGHT)->encode('jpg',80);
         Storage::disk('upload')->put($filename, $photo);
         return $filename;
     }

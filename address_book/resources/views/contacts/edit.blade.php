@@ -72,7 +72,7 @@
                         <label for="country" class="col-sm">Country:</label>
                         <select class="form-control col-sm-10" name="country_id" id="country_id">
                                 @foreach($countries as $country)
-                                    <option value="{{ $country->name}}" {{ $person->country->name == $country->name ? 'selected="selected"' : '' }}>
+                                    <option value="{{ $country->id}}" {{ $person->country->id == $country->id ? 'selected="selected"' : '' }}>
                                         {{$country->name}}</option>  
                                 @endforeach
                         </select>
@@ -90,7 +90,7 @@
                         <label for="city" class="col-sm">City:</label>
                         <select class="form-control col-sm-10" name="city_id" id="city_id">
                                 @foreach($cities as $city)
-                                    <option value="{{ $city->name}}" {{ $person->city->name == $city->name ? 'selected="selected"' : '' }}>
+                                    <option value="{{ $city->id}}" {{ $person->city->id == $city->id ? 'selected="selected"' : '' }}>
                                         {{$city->name}}</option>  
                                 @endforeach  
                         </select>
