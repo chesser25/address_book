@@ -1,34 +1,63 @@
 <?php
 namespace App\Library\Services;
 
-use App\Contact;
-use App\City;
-use App\Country;
-  
-class Repository
-{
+use App\contact;
+use App\city;
+use App\country;
+
+/**
+ * Implementation of repository
+ * 
+ * @author Andrew Lomakin
+ * 
+ */
+class repository {
+    
     function __construct(){
+        // Constant to indicate a count of contacts per table
         define('CONTACTS_PER_PAGE', 1);
     }
 
-    public function getAllCountries(){
-        return Country::all();
+    /**
+     * Get a list of all country objects
+     * @return array
+     */
+    public function get_all_countries(){
+        return country::all();
     }
 
-    public function getAllCities(){
-        return City::all();
+    /**
+     * Get a list of all city objects
+     * @return array
+     */
+    public function get_all_cities(){
+        return city::all();
     }
 
-    public function getPaginatedContactsList(){
-        return Contact::sortable()->paginate(CONTACTS_PER_PAGE);
+    /**
+     * Get a sortable & paginated list of contacts
+     * @return array
+     */
+    public function get_paginated_contacts_list(){
+        return contact::sortable()->paginate(CONTACTS_PER_PAGE);
     }
 
-    public function deleteContact(Contact $contact){
-        Contact::where('id', $contact->id)->delete();
+    /**
+     * Delete contact
+     * @param contact $contact
+     */
+    public function delete_contact(Contact $contact){
+        contact::where('id', $contact->id)->delete();
     }
 
-    public function findContact($keywords, $country, $city){
-        return Contact::where('first_name', 'LIKE', '%' . $keywords . '%')
+    /**
+     * Find contact
+     * @param $keywords (first or last name)
+     * @param $country
+     * @param $city
+     */
+    public function find_contact($keywords, $country, $city){
+        return contact::where('first_name', 'LIKE', '%' . $keywords . '%')
             ->orWhere('last_name', 'LIKE', '%' . $keywords . '%')
             ->orWhere('city', '=', $city)
             ->orWhere('counntry', '=', $country)
@@ -36,11 +65,20 @@ class Repository
             ->paginate(CONTACTS_PER_PAGE);
     }
 
-    public function updateContact($person, $data){
-        Contact::where('id', $person->id)->update($data);
+    /**
+     * Update contact
+     * @param contact $person to update
+     * @param array list of Contact data
+     */
+    public function update_contact($person, $data){
+        contact::where('id', $person->id)->update($data);
     }
 
-    public function createContact($data){
-        Contact::create($data);
+    /**
+     * Create contact
+     * @param array of contact data
+     */
+    public function create_contact($data){
+        contact::create($data);
     }
 }

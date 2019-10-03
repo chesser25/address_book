@@ -11,19 +11,19 @@
 |
 */
 
-Route::get('/', 'ContactsController@index');
-Route::get('/search', 'ContactsController@search');
+Route::get('/', 'contacts_controller@index');
+Route::get('/search', 'contacts_controller@search');
 
 Auth::routes();
 
-Route::get('/contact/create', 'ContactsController@create')->middleware('auth');
-Route::post('/contact', 'ContactsController@store')->middleware('auth');
+Route::get('/contact/create', 'contacts_controller@create')->middleware('auth');
+Route::post('/contact', 'contacts_controller@store')->middleware('auth');
 
-Route::get('contact/{person}', 'ContactsController@show')->name('contact.show');
-Route::get('/dashboard', 'ContactsController@index')->middleware('auth');
+Route::get('contact/{person}', 'contacts_controller@show')->name('contact.show');
+Route::get('/dashboard', 'contacts_controller@index')->middleware('auth');
 
-Route::get('/contact/{person}/edit', 'ContactsController@edit')->middleware('auth');
-Route::patch('/contact/{person}', 'ContactsController@update')->middleware('auth');
+Route::get('/contact/{person}/edit', 'contacts_controller@edit')->middleware('auth');
+Route::patch('/contact/{person}', 'contacts_controller@update')->middleware('auth');
 
-Route::delete('/contact/{person}/destroy', 'ContactsController@destroy')->middleware('auth');
+Route::delete('/contact/{person}/destroy', 'contacts_controller@destroy')->middleware('auth');
 

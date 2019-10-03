@@ -1,16 +1,18 @@
 <?php
 namespace App\Library\Services;
 
-use App\Contact;
-use App\City;
-use App\Country;
-  
-class Validator
-{
-    private $dataToValidate;
-    
-    function __construct(){
-        $this->dataToValidate = [
+/**
+ * Implementation of validator
+ * 
+ * @author Andrew Lomakin
+ * 
+ */
+class validator {
+    private $data_to_validate;
+
+    function __construct() {
+        // Data to be validated
+        $this->data_to_validate = [
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => ['required', 'email'],
@@ -21,16 +23,31 @@ class Validator
         ];
     }
 
-    public function validateSave($request){
-        $this->dataToValidate['photo'] = ['required', 'image']; 
-        return $this->validateData($request);
+    /**
+     * Validate data when user saves new contact
+     * @param $request 
+     * @return array of validated data
+     */
+    public function validate_save_contact($request){
+        $this->data_to_validate['photo'] = ['required', 'image']; 
+        return $this->validate_data($request);
     }
 
-    public function validateUpdate($request){
-        return $this->validateData($request);
+    /**
+     * Validate data when user makes an update of contact
+     * @param $request 
+     * @return array of validated data
+     */
+    public function validate_update_contact($request){
+        return $this->validate_data($request);
     }
 
-    private function validateData($request){
-        return $request->validate($this->dataToValidate);
+    /**
+     * General method to validate
+     * @param $request 
+     * @return array of validated data
+     */
+    private function validate_data($request){
+        return $request->validate($this->data_to_validate);
     }
 }
