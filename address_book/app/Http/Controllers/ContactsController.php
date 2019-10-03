@@ -3,20 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Country;
-use \App\City;
-use \App\Contact;
-
-use Image;
+use \App\Library\Services\Repository;
+use \App\Library\Services\ImageManager;
+use \App\Library\Services\Validator;
 
 class ContactsController extends Controller
 {
+    private $repository;
+    private $imageManager;
+    private $validator;
+
+    function __construct(Repository $repository, ImageManager $imageManager, Validator $validator){
+        $this->repository = $repository;
+        $this->imageManager = $imageManager;
+        $this->validator = $validator;
+    }
+
     public function index(){
-        $contactsPerPage = 1;
-        $contacts = Contact::sortable()->paginate($contactsPerPage);
-        $countries = Country::all();
-        $cities = City::all();
-        return view('contacts.index', compact('contacts', 'countries', 'cities'));
+        return view('contacts.index', [
+            'contacts' => $this->repository->getPaginatedContactsList(),
+            'countries' => $this->repository->getAllCountries(),
+            'cities' => $this->repository->getAllCities()
+        ]);
     }
 
     public function show(Contact $person){
@@ -24,116 +32,67 @@ class ContactsController extends Controller
     }
 
     public function create(){
-        $countries = Country::all();
-        $cities = City::all();
         return view('contacts/create',[
-            'countries' => $countries,
-            'cities' => $cities
+            'countries' => $this->repository->getAllCountries(),
+            'cities' => $this->repository->getAllCities()
         ]);
     }
 
     public function store(){
         // Validate data
-        $data = request()->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => ['required', 'email'],
-            'country' => 'required',
-            'city' => 'required',
-            'photo' => ['required', 'image'],
-            'description' => ''
-        ]);
+        $data = $this->validator->validateSave(request());
 
-        // Get foreign keys objects 
-        $country = Country::where('name', $data['country'])->firstOrFail();
-        $city = City::where('name', $data['city'])->firstOrFail();
-        
-        // Save photo
-        $thumbnailImage = Image::make(request('photo'));
-        $thumbnailImage = $thumbnailImage->resize(300, 400);
-        $thumbnailImage = $thumbnailImage->save('uploads/'.time().request('photo')->getClientOriginalName());
-
-        // Create new contact and save in db
-        $contact = new Contact();
-        $contact->first_name = $data['first_name'];
-        $contact->last_name = $data['last_name'];
-        $contact->email = $data['email'];
-        $contact->photo = $thumbnailImage->basename;
-        $contact->description = $data['description'];
-        $contact->country_id = $country->id;
-        $contact->city_id = $city->id;
-        $contact->save();
+        $data['photo'] = $this->imageManager->save($data['photo']);
+        $data['country_id'] = $this->repository->getCountryByName($data['country_id'])->id;
+        $data['city_id'] = $this->repository->getCityByName($data['city_id'])->id;
+        $this->repository->createContact($data);
 
         // Show a list of all contacts
         return redirect('/dashboard');
     }
 
     public function edit(Contact $person){
-        $countries = Country::all();
-        $cities = City::all();
         return view('contacts.edit', [
             'person' => $person,
-            'countries' => $countries,
-            'cities' => $cities
+            'countries' => $this->repository->getAllCountries(),
+            'cities' => $this->repository->getAllCities()
         ]);
     }
 
     public function update(Contact $person){
         // Validate data
-        $data = request()->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => ['required', 'email'],
-            'country' => 'required',
-            'city' => 'required',
-            'photo' => '',
-            'description' => ''
-        ]);
+        $data = $this->validator->validateUpdate(request());
 
-        // Get foreign keys objects 
-        $country = Country::where('name', $data['country'])->firstOrFail();
-        $city = City::where('name', $data['city'])->firstOrFail();
-
-        
-        unset($data['country']);
-        unset($data['city']);
-
-        $data['country_id'] = $country->id;
-        $data['city_id'] = $city->id;
+        $data['country_id'] = $this->repository->getCountryByName($data['country_id'])->id;
+        $data['city_id'] = $this->repository->getCityByName($data['city_id'])->id;
 
         // Save photo
         if(isset($data['photo'])){
-            unlink('uploads/' . $person->photo);
-            $thumbnailImage = Image::make(request('photo'));
-            $thumbnailImage = $thumbnailImage->resize(300, 400);
-            $thumbnailImage = $thumbnailImage->save('uploads/'.time().request('photo')->getClientOriginalName());
-            $data['photo'] = $thumbnailImage->basename;
+            $this->imageManager->delete($person->photo);
+            $data['photo'] = $this->imageManager->save($data['photo']);
         }else{
             $data['photo'] = $person->photo;
         }
 
-        Contact::where('id', $person->id)->update($data);
+        $this->repository->updateContact($person, $data);
         return redirect('/dashboard');
     }
 
     public function destroy(Contact $person){
-        unlink('uploads/' . $person->photo);
-        Contact::where('id', $person->id)->delete();
+        $this->imageManager->delete($person->photo);
+        $this->repository->deleteContact($person);
         return redirect('/dashboard');
     }
 
     public function search(){
-        $contactsPerPage = 1;
         $keywords = request()['keywords'];
         $country = request()['country_id'];
         $city = request()['city_id'];
-        $contacts = Contact::where('first_name', 'LIKE', '%' . $keywords . '%')
-            ->orWhere('city', '=', $city)
-            ->orWhere('counntry', '=', $country)
-            ->sortable()
-            ->paginate($contactsPerPage);
-        $countries = Country::all();
-        $cities = City::all();
-        return view('contacts.index', compact('contacts', 'countries', 'cities'));
+
+        return view('contacts.index', [
+            'contacts' => $contacts,
+            'countries' => $this->repository->getAllCountries(),
+            'cities' => $this->repository->findContact($keywords, $country, $city)
+        ]);
     }
 }

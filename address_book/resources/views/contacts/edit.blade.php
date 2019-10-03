@@ -70,7 +70,7 @@
                 <div class="container">
                     <div class="row pt-2 d-flex align-items-baseline">
                         <label for="country" class="col-sm">Country:</label>
-                        <select class="form-control col-sm-10" name="country" id="country">
+                        <select class="form-control col-sm-10" name="country_id" id="country_id">
                                 @foreach($countries as $country)
                                     <option value="{{ $country->name}}" {{ $person->country->name == $country->name ? 'selected="selected"' : '' }}>
                                         {{$country->name}}</option>  
@@ -88,7 +88,7 @@
                 <div class="container">
                     <div class="row pt-2 d-flex align-items-baseline">
                         <label for="city" class="col-sm">City:</label>
-                        <select class="form-control col-sm-10" name="city" id="city">
+                        <select class="form-control col-sm-10" name="city_id" id="city_id">
                                 @foreach($cities as $city)
                                     <option value="{{ $city->name}}" {{ $person->city->name == $city->name ? 'selected="selected"' : '' }}>
                                         {{$city->name}}</option>  
@@ -116,7 +116,7 @@
                                 
                 <div class="container">
                     <div class="row pt-2 d-flex align-items-baseline">
-                        <img id="photo-preview" class="form-control-file col-10 offset-2" src="/uploads/{{$person->photo}}" alt="" width="300px" height="400px"/>
+                        <img id="photo-preview" class="form-control-file col-10 offset-2" src="{{ asset('storage/uploads/'.$person->photo) }}" alt="" width="300px" height="400px"/>
                     </div>
                 </div>
 
