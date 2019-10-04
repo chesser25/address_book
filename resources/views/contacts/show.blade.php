@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="rounded float-left offset-3">
-            <img id="photo-preview" class="form-control-file" src="/uploads/{{$person->photo}}" alt="" width="300px" height="400px"/>
+            <img id="photo-preview" class="form-control-file" src="{{ asset('storage/uploads/'.$person->photo) }}" alt="" width="300px" height="400px"/>
         </div>
     </div>
     <div class="d-flex flex-row justify-content-start pt-5">
