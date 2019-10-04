@@ -15,7 +15,8 @@
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.0",
-        "ext-pdo_sqlite": "*"
+        "ext-pdo_sqlite": "*",
+        "ext-gd":" *"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
